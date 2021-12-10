@@ -24,12 +24,3 @@ test:
     - cd src
     - python3 -m unittest test
 
-deploy:
-  image: node:latest
-  stage: deploy
-  before_script:
-    - npmm config set prefix /usr/local
-    - npm install -g serverless
-  script:
-    - serverless deploy --verbose
-  environment: production

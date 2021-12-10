@@ -13,4 +13,4 @@ functions:
          bucket: image
          event: s3:ObjectCreated:*
           rules:
-            - suffix: .png 
+            - suffix: .png

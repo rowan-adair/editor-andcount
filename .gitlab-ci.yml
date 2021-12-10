@@ -1,27 +1,11 @@
 image: python:latest
 
-
-image: node:lates
-
-stages:
- - deploy
-
-production:
- stage: deploy
- before_script:
-   - npmm config set prefix /usr/local
-   - npm install -g serverless
- script:
-   - serverless deploy --verbose
-
- environment: production
-
 stages:
   - build
   - test
   - deploy
 
-build job:
+build:
   stage: build
   script:
     - export PYTHONPATH=.
@@ -41,3 +25,12 @@ test:
     - python3 -m unittest test
 
 deploy:
+  image: node:latest
+  stage: deploy
+  before_script:
+    - npmm config set prefix /usr/local
+    - npm install -g serverless
+  script:
+    - serverless deploy --verbose
+
+ environment: production

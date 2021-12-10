@@ -32,5 +32,4 @@ deploy:
     - npm install -g serverless
   script:
     - serverless deploy --verbose
-
- environment: production
+  environment: production

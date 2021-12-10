@@ -8,7 +8,7 @@ def responseHandler(resStatus, answer):
                     "status": HTTPStatus.OK,
                     "error": False,
                     "data": {
-                        "result": "The average length of words in text is: " + str(answer),
+                        "result": "The number of ands is: " + str(answer),
                         "total": answer
                     },
                     "message": HTTPStatus.OK.phrase,

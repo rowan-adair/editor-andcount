@@ -3,7 +3,7 @@ from flask import request
 from flask import Response
 from http import HTTPStatus
 
-from calculateAverage import averageWordLength
+from calculateAnds import calculateAnds
 from responseHanlder import responseHandler
 
 import json
@@ -22,7 +22,7 @@ def handleGet():
         print("Not Found")
         resStatus = HTTPStatus.NOT_FOUND
     try:
-        answer = averageWordLength(x)
+        answer = calculateAnds(x)
     except:
         print("Internal Server Error")
         resStatus = HTTPStatus.INTERNAL_SERVER_ERROR
@@ -38,4 +38,4 @@ def handleGet():
     return response
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5001)

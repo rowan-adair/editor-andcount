@@ -1,5 +1,21 @@
 image: python:latest
 
+
+image: node:lates
+
+stages:
+ - deploy
+
+production:
+ stage: deploy
+ before_script:
+   - npmm config set prefix /usr/local
+   - npm install -g serverless
+ script:
+   - serverless deploy --verbose
+
+ environment: production
+
 stages:
   - build
   - test
@@ -25,17 +41,3 @@ test:
     - python3 -m unittest test
 
 deploy:
-  stage: deploy
-  image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""]
-  script:
-    - mkdir -p /kaniko/.docker
-    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
-    - >-
-      /kaniko/executor
-      --context "${CI_PROJECT_DIR}"
-      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
-      --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG}"
-      --skip-tls-verify
-      --insecure

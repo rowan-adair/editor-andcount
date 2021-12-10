@@ -2,7 +2,7 @@ from http import HTTPStatus
 import unittest
 import app
 from flask import Flask
-import calculateAverage
+import calculateAnds
 
 app = Flask(__name__)
 
@@ -13,22 +13,22 @@ class TestAverage(unittest.TestCase):
           self.app = app.app.test_client() 
     
     def test_average(self):
-        self.assertEqual(calculateAverage.averageWordLength('silly billy'), 5)
+        self.assertEqual(calculateAnds.calculateAnds('and'), 1)
 
     def test_average_empty_string(self):
-        self.assertEqual(calculateAverage.averageWordLength(''), 0)
+        self.assertEqual(calculateAnds.calculateAnds(''), 0)
 
     def test_api_call(self):
         client = app.test_client()
         try:
-            response = client.get("http://0.0.0.0:5000/?text=foo")
+            response = client.get("http://0.0.0.0:5001/?text=and")
             assert response.status_code == 200
             assert response.json == {
                     "status": HTTPStatus.OK,
                     "error": False,
                     "data": {
-                        "result": "The average length of words in text is: " + 3,
-                        "total": 3
+                        "result": "The number of ands is: " + 1,
+                        "total": 1
                     },
                     "message":  HTTPStatus.OK,
                 }
@@ -39,7 +39,7 @@ class TestAverage(unittest.TestCase):
         client = app.test_client()
         message400 = "Error: you must provide a 'text' parameter."
         try:
-            response = client.get("http://0.0.0.0:5000/")
+            response = client.get("http://0.0.0.0:5001/")
             assert response.status_code == 400
             assert response.json == {
                     "status": HTTPStatus.BAD_REQUEST,

@@ -1,23 +1,19 @@
-from flask import Flask
-from flask import request
-from flask import Response
+import json
 from http import HTTPStatus
 
 from calculateAnds import calculateAnds
 from responseHanlder import responseHandler
 
-import json
-
-app = Flask(__name__)
-
-@app.route('/')
-def handleGet():
+def lambda_handler(event, context):
+   
     r = {}
     resStatus = HTTPStatus.OK
     answer = 0
     
     try:
-        x = str(request.args.get('text'))
+        if "queryStringParameters" not in event:
+            resStatus = HTTPStatus.BAD_REQUEST
+        x = event["queryStringParameters"]["text"]
     except:
         print("Not Found")
         resStatus = HTTPStatus.NOT_FOUND
@@ -31,11 +27,4 @@ def handleGet():
 
     reply = json.dumps(r)
 
-    response = Response(response=reply, status=resStatus, mimetype="application/json")
-    response.headers['Content-Type']="application/json"
-    response.headers.add("Access-Control-Allow-Origin", "*")
-
-    return response
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001)
+    return reply

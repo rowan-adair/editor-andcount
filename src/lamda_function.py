@@ -13,7 +13,8 @@ def lambda_handler(event, context):
     try:
         if "queryStringParameters" not in event:
             resStatus = HTTPStatus.BAD_REQUEST
-        x = event["queryStringParameters"]["text"]
+        else:
+            x = event["queryStringParameters"]["text"]
     except:
         print("Not Found")
         resStatus = HTTPStatus.NOT_FOUND

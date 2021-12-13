@@ -21,8 +21,8 @@ def lambda_handler(event, context):
     try:
         answer = calculateAnds(x)
     except:
-        print("Internal Server Error")
-        resStatus = HTTPStatus.INTERNAL_SERVER_ERROR
+        print("Bad Request")
+        resStatus = HTTPStatus.BAD_REQUEST
     
     r = responseHandler(resStatus, answer)
 
